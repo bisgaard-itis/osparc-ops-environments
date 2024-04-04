@@ -1,0 +1,146 @@
+{
+  "dashboard": {
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "RmZEr52nz"
+        },
+        "description": "The Api-server holds log queues in memory. When a user streams logs from a computational job, the api server \"pulls\" the job logs from RabbitMQ into its own queue. This panel shows the current number of logs held in memory in the Api-server (for a given job_id)",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            }
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 23,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 1,
+        "options": {
+          "displayMode": "gradient",
+          "minVizHeight": 10,
+          "minVizWidth": 0,
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showUnfilled": true,
+          "valueMode": "color"
+        },
+        "pluginVersion": "10.0.3",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "RmZEr52nz"
+            },
+            "editorMode": "builder",
+            "expr": "sum by(job_id) (simcore_service_api_server_log_stream_queue_length{deployment=\"$deployment\", service_name=\"api-server\", job=\"simcore\"})",
+            "instant": false,
+            "legendFormat": "job_id: {{job_id}}",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Api-server log queues",
+        "type": "bargauge"
+      }
+    ],
+    "refresh": "",
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "current": {
+            "selected": true,
+            "text": "master",
+            "value": "master"
+          },
+          "description": "Deployment",
+          "hide": 0,
+          "includeAll": false,
+          "label": "deployment",
+          "multi": false,
+          "name": "deployment",
+          "options": [
+            {
+              "selected": false,
+              "text": "staging",
+              "value": "staging"
+            },
+            {
+              "selected": false,
+              "text": "production",
+              "value": "production"
+            },
+            {
+              "selected": true,
+              "text": "master",
+              "value": "master"
+            }
+          ],
+          "query": "staging, production, master",
+          "queryValue": "",
+          "skipUrlSync": false,
+          "type": "custom"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "API server log streaming queues",
+    "version": 0,
+    "weekStart": ""
+  }
+}
